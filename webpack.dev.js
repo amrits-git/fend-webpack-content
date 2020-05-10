@@ -7,13 +7,20 @@ const {CleanWebpackPlugin} = require ('clean-webpack-plugin');
 module.exports = {
     entry: './src/index.js',
     mode: 'development',
+    devtool: 'source-map',
+    stats: 'verbose',
     module:{
         rules: [
             {
             test: '/\.js$/',
             exclude: /node_modules/,
             loader: "babel-loader"
-        }]
+            },
+            {
+            test: /\.scss$/,
+            use: ['style-loader', 'css-loader', 'sass-loader' ]
+            }
+        ]
     },
     plugins:[
         new HtmlWebPackPlugin({
