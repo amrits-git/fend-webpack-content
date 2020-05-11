@@ -5,7 +5,7 @@ const {CleanWebpackPlugin} = require ('clean-webpack-plugin');
 //const {WebpackBundleAnalyzer} = require ('webpack-bundle-analyzer');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/client/index.js',
     mode: 'development',
     devtool: 'source-map',
     stats: 'verbose',
