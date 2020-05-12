@@ -2,10 +2,17 @@ const path = require ("path")
 const webpack = require ('webpack')
 const HtmlWebPackPlugin = require ('html-webpack-plugin')
 const {CleanWebpackPlugin} = require ('clean-webpack-plugin');
+const MiniCssExtractPlugin = require ('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require ('optimize-css-assets-webpack-plugin');
+const TerserWebpackPlugin = require ('terser-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 //const {WebpackBundleAnalyzer} = require ('webpack-bundle-analyzer');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/client/index.js',
+    optimization: {
+        minimizer: [new TerserWebpackPlugin({}), new OptimizeCSSAssetsPlugin({})]
+    },
     mode: 'production',
     devtool: 'source-map',
     stats: 'verbose',
@@ -22,7 +29,7 @@ module.exports = {
             },
             {
             test: /\.scss$/,
-            use: ['style-loader', 'css-loader', 'sass-loader' ]
+            use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
             }
         ]
     },
@@ -40,6 +47,8 @@ module.exports = {
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false
         }),
+        new MiniCssExtractPlugin({filename: '[name].css'}),
+        new WorkboxPlugin.GenerateSW()
         //new WebpackBundleAnalyzer()
     ]
 }
